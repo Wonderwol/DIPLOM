@@ -10,5 +10,4 @@ flask_login
 werkzeug
 datetime
 flask_babel
-os
 matplotlib
