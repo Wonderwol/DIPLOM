@@ -167,6 +167,10 @@ def calculate_calories(workout_type: str, duration: int) -> int:
     return calories_per_minute.get(type_lower, 5) * duration
 
 
+# Для хостинга
+db.create_all()
+
+
 @app.route('/')
 def start():
     return redirect(url_for('main'))
