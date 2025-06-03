@@ -7,10 +7,8 @@ gunicorn
 matplotlib
 flask_admin
 flask_login
-werkzeug.security
+werkzeug
 datetime
-flask_admin.menu
 flask_babel
-matplotlib.pyplot
 os
 matplotlib
