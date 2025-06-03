@@ -5,7 +5,7 @@ def calculate_nutrition(user):
     weight = user.weight_kg
     height = user.height_cm
     age = user.age
-    gender = user.gender  # исправлено
+    gender = user.gender
     goal = user.goal
     activity_level = user.activity_level
 

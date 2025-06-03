@@ -2,7 +2,7 @@ from flask import Flask, session, render_template, redirect, request, url_for
 from flask_migrate import Migrate
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from flask_login import LoginManager, current_user, login_user, UserMixin, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_admin.menu import MenuLink
@@ -166,7 +166,6 @@ def calculate_calories(workout_type: str, duration: int) -> int:
     return calories_per_minute.get(type_lower, 5) * duration
 
 
-# Главная страница
 @app.route('/')
 def start():
     return redirect(url_for('main'))
@@ -181,7 +180,6 @@ def main():
     return render_template('index.html', username=user.username, is_admin=user.is_admin)
 
 
-# Регистрация
 @app.route('/app/register', methods=['GET', 'POST'])
 def registerPage():
     errors = []
@@ -208,7 +206,6 @@ def registerPage():
     return redirect("/app/login")
 
 
-# Авторизация
 @app.route('/app/login', methods=["GET", "POST"])
 def loginPage():
     errors = []
@@ -235,7 +232,6 @@ def loginPage():
     return redirect("/app/index/")
 
 
-# Выход
 @app.route('/app/logout')
 def logout():
     logout_user()
@@ -386,7 +382,6 @@ def edit_workout(workout_id):
         workout.date = request.form.get('date')
         workout.duration_minutes = int(request.form.get('duration'))
 
-        # Повторный расчёт калорий
         met_values = {"Бег": 10, "Силовая": 6, "Йога": 2.5, "Велотренажёр": 7, "Плавание": 8}
         met = met_values.get(workout.type, 5)
         user = User.query.get(workout.user_id)
@@ -448,14 +443,12 @@ def stats():
 
     matplotlib.use('Agg')  # Используем без GUI
 
-    # Все тренировки пользователя
     workouts = Workout.query.filter_by(user_id=user_id).order_by(Workout.date).all()
     total_workouts = len(workouts)
     total_minutes = sum(w.duration_minutes for w in workouts)
     total_calories = sum(w.calories_burned for w in workouts)
     active_days = len(set(w.date for w in workouts))
 
-    # Типы тренировок
     type_counts = {}
     for w in workouts:
         type_counts[w.type] = type_counts.get(w.type, 0) + 1
