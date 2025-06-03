@@ -10,7 +10,6 @@ from flask_babel import Babel
 from utils.nutrition import calculate_nutrition
 import matplotlib.pyplot as plt
 import os
-from datetime import datetime
 import matplotlib
 
 from Db import db

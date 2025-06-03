@@ -5,3 +5,12 @@ Flask-Migrate
 psycopg2-binary
 gunicorn
 matplotlib
+flask_admin
+flask_login
+werkzeug.security
+datetime
+flask_admin.menu
+flask_babel
+matplotlib.pyplot
+os
+matplotlib
