@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — FitLife{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-primary text-white">Добро пожаловать, {{ username }}!</h1>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg h-100 hover-shadow rounded-4 bg-white border-0 text-center">
+        <div class="card-body">
+          <div class="mb-3 fs-1">🏋️‍♂️</div>
+          <h5 class="card-title">Тренировки</h5>
+          <a href="{{ url_for('trainings') }}" class="stretched-link text-decoration-none"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg h-100 hover-shadow rounded-4 bg-white border-0 text-center">
+        <div class="card-body">
+          <div class="mb-3 fs-1">👣</div>
+          <h5 class="card-title">Шаги</h5>
+          <a href="{{ url_for('steps') }}" class="stretched-link text-decoration-none"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg h-100 hover-shadow rounded-4 bg-white border-0 text-center">
+        <div class="card-body">
+          <div class="mb-3 fs-1">🍎</div>
+          <h5 class="card-title">Рекомендации по питанию</h5>
+          <a href="{{ url_for('nutrition_recommendation') }}" class="stretched-link text-decoration-none"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg h-100 hover-shadow rounded-4 bg-white border-0 text-center">
+        <div class="card-body">
+          <div class="mb-3 fs-1">📊</div>
+          <h5 class="card-title">Статистика</h5>
+          <a href="{{ url_for('stats') }}" class="stretched-link text-decoration-none"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg h-100 hover-shadow rounded-4 bg-white border-0 text-center">
+        <div class="card-body">
+          <div class="mb-3 fs-1">📚</div>
+          <h5 class="card-title">Статьи</h5>
+          <a href="{{ url_for('articles') }}" class="stretched-link text-decoration-none"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

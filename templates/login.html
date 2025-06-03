@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Вход — FitLife{% endblock %}
+{% set hide_navbar = True %}
+{% block content %}
+
+<div class="text-center mb-4">
+  <h1 class="display-3 fw-bold text-dark">FitLife</h1>
+  <p class="lead">С возвращением! Войдите в аккаунт</p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm p-4 rounded-4">
+      <h2 class="text-center mb-4">Вход</h2>
+      <form method="POST" action="{{ url_for('loginPage') }}">
+        <div class="mb-3">
+          <label for="username" class="form-label">Имя пользователя</label>
+          <input type="text" class="form-control" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Пароль</label>
+          <input type="password" class="form-control" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Войти</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="{{ url_for('registerPage') }}" class="text-decoration-none link-success fw-semibold">Нет аккаунта?</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast-ошибки -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  {% for error in errors %}
+    <div class="toast align-items-center text-bg-danger border-0 show mb-2" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ error }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

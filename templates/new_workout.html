@@ -1,0 +1,49 @@
+<form method="post">
+  <div class="mb-3">
+    <label for="type" class="form-label">Тип тренировки</label>
+    <select name="type" id="typeSelect" class="form-select" required onchange="toggleCustomType()">
+      <option value="">Выберите</option>
+      <option value="Бег">Бег</option>
+      <option value="Силовая">Силовая</option>
+      <option value="Йога">Йога</option>
+      <option value="Велотренажёр">Велотренажёр</option>
+      <option value="custom">Свой вариант</option>
+    </select>
+  </div>
+
+  <div class="mb-3 d-none" id="customTypeContainer">
+    <label for="custom_type" class="form-label">Введите свой тип тренировки</label>
+    <input type="text" class="form-control" name="custom_type" id="custom_type">
+  </div>
+
+  <div class="mb-3">
+    <label for="date" class="form-label">Дата</label>
+    <input type="date" class="form-control" name="date" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="duration" class="form-label">Длительность (мин)</label>
+    <input type="number" class="form-control" name="duration" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+<script>
+  function toggleCustomType() {
+    const select = document.getElementById('typeSelect');
+    const container = document.getElementById('customTypeContainer');
+    const input = document.getElementById('custom_type');
+
+    if (select.value === 'custom') {
+      container.classList.remove('d-none');
+      input.required = true;
+    } else {
+      container.classList.add('d-none');
+      input.required = false;
+      input.value = '';
+    }
+  }
+</script>
+
+

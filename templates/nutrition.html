@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Питание — fitLife{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow rounded-4 p-4">
+        <h3 class="text-center text-primary mb-4">Рекомендации по питанию</h3>
+
+        <p class="fs-5"><strong>Суточная калорийность:</strong> {{ nutrition.calories }} ккал</p>
+
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between">
+            <span><strong>Белки:</strong> {{ nutrition.protein }} г</span>
+            <span>{{ nutrition.protein_kcal }} ккал</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><strong>Жиры:</strong> {{ nutrition.fat }} г</span>
+            <span>{{ nutrition.fat_kcal }} ккал</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><strong>Углеводы:</strong> {{ nutrition.carbs }} г</span>
+            <span>{{ nutrition.carbs_kcal }} ккал</span>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}fitLife{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      padding-top: {% if request.endpoint not in ['loginPage', 'registerPage'] %}60px{% else %}0{% endif %};
+      background: linear-gradient(135deg, #89f7fe, #66a6ff); /* Более голубой фон */
+      min-height: 100vh;
+      {% if request.endpoint in ['loginPage', 'registerPage'] %}
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      {% endif %}
+    }
+
+    .auth-container {
+      margin-top: 120px;
+      max-width: 400px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .auth-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #0d6efd;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-primary {
+      background-color: #0d6efd !important;
+      border-color: #0d6efd !important;
+    }
+
+    .btn-success {
+      background-color: #198754 !important;
+      border-color: #198754 !important;
+    }
+
+    .brand-hover {
+      font-weight: bold;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .brand-hover:hover {
+      transform: scale(1.08);
+    }
+
+    .link-hover {
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .link-hover:hover {
+      color: #0dcaf0 !important;
+      transform: scale(1.08);
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #6a11cb, #2575fc) !important;
+    }
+
+    .navbar-nav .nav-link {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      color: white !important;
+    }
+
+    .hover-shadow:hover {
+      transform: translateY(-5px);
+      transition: 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .home-card {
+      border-radius: 1.5rem !important;
+      background: white;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card {
+      max-width: 400px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-card {
+      max-width: 600px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-label {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+{% if request.endpoint not in ['loginPage', 'registerPage'] %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm py-2">
+  <div class="container">
+    <a class="navbar-brand brand-hover text-white" href="{{ url_for('main') }}">FitLife</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item">
+          <a class="nav-link link-hover" href="{{ url_for('user_profile') }}">
+            <img src="{{ url_for('static', filename='user_icon.png') }}" alt="Профиль" height="28" class="rounded-circle">
+          </a>
+        </li>
+        {% if current_user.is_authenticated and current_user.is_admin %}
+        <li class="nav-item">
+          <a class="nav-link link-hover" href="{{ url_for('admin.index') }}">Админка</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link link-hover text-danger" href="{{ url_for('logout') }}">Выйти</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endif %}
+
+<main class="container mt-4">
+  {% block content %}{% endblock %}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

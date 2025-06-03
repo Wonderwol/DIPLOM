@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Редактировать тренировку</h2>
+  <form method="POST">
+    <div class="mb-3">
+      <label for="type">Тип тренировки:</label>
+      <select name="type" class="form-select" required>
+        <option value="Бег" {% if workout.type == 'Бег' %}selected{% endif %}>Бег</option>
+        <option value="Силовая" {% if workout.type == 'Силовая' %}selected{% endif %}>Силовая</option>
+        <option value="Йога" {% if workout.type == 'Йога' %}selected{% endif %}>Йога</option>
+        <option value="Велотренажёр" {% if workout.type == 'Велотренажёр' %}selected{% endif %}>Велотренажёр</option>
+        <option value="Плавание" {% if workout.type == 'Плавание' %}selected{% endif %}>Плавание</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="date">Дата:</label>
+      <input type="date" name="date" class="form-control" value="{{ workout.date }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="duration">Длительность (мин):</label>
+      <input type="number" name="duration" class="form-control" value="{{ workout.duration_minutes }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    <a href="{{ url_for('trainings') }}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}

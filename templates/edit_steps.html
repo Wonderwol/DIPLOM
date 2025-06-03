@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow rounded-4 p-4">
+        <h3 class="text-center text-primary mb-4">Редактировать шаги</h3>
+
+        <form method="POST">
+          <div class="mb-3">
+            <label for="date" class="form-label">Дата</label>
+            <input type="date" name="date" class="form-control" value="{{ step.date.strftime('%Y-%m-%d') }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="steps" class="form-label">Количество шагов</label>
+            <input type="number" name="steps" class="form-control" value="{{ step.steps }}" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

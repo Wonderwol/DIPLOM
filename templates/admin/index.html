@@ -1,0 +1,16 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div class="container mt-4">
+  <h2>Добро пожаловать в админку 💪</h2>
+
+  <div class="mt-3">
+    <ul class="list-group">
+      <li class="list-group-item">👤 Пользователей: <strong>{{ user_count }}</strong></li>
+      <li class="list-group-item">🏋️‍♂️ Тренировок: <strong>{{ workout_count }}</strong></li>
+      <li class="list-group-item">📋 Планов тренировок: <strong>{{ plan_count }}</strong></li>
+      
+    </ul>
+  </div>
+</div>
+{% endblock %}

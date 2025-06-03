@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Профиль — fitLife{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow-lg mx-auto" style="max-width: 500px; border-radius: 1.5rem; background-color: white;">
+    <h2 class="mb-4 text-center text-primary">Профиль</h2>
+
+    {% if not user.age or not user.height_cm or not user.weight_kg or not user.goal or request.args.get('edit') %}
+    <form method="post">
+      <div class="mb-3">
+        <label for="gender" class="form-label">Пол</label>
+        <select class="form-select" name="gender" required>
+          <option value="">Выберите</option>
+          <option value="мужской" {% if user.gender == 'мужской' %}selected{% endif %}>Мужской</option>
+          <option value="женский" {% if user.gender == 'женский' %}selected{% endif %}>Женский</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Возраст</label>
+        <input type="number" class="form-control" name="age" value="{{ user.age or '' }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Рост (см)</label>
+        <input type="number" class="form-control" name="height_cm" value="{{ user.height_cm or '' }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Вес (кг)</label>
+        <input type="number" class="form-control" step="0.1" name="weight_kg" value="{{ user.weight_kg or '' }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Цель</label>
+        <select class="form-select" name="goal">
+          <option value="">-- выберите --</option>
+          <option value="похудение" {% if user.goal == 'похудение' %}selected{% endif %}>Похудение</option>
+          <option value="набор" {% if user.goal == 'набор' %}selected{% endif %}>Набор массы</option>
+          <option value="поддержание" {% if user.goal == 'поддержание' %}selected{% endif %}>Поддержание</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Уровень активности</label>
+        <select class="form-select" name="activity_level">
+          <option value="">-- выберите --</option>
+          <option value="sedentary" {% if user.activity_level == 'sedentary' %}selected{% endif %}>Сидячий</option>
+          <option value="lightly_active" {% if user.activity_level == 'lightly_active' %}selected{% endif %}>Слабая активность</option>
+          <option value="moderately_active" {% if user.activity_level == 'moderately_active' %}selected{% endif %}>Средняя активность</option>
+          <option value="very_active" {% if user.activity_level == 'very_active' %}selected{% endif %}>Высокая активность</option>
+          <option value="extra_active" {% if user.activity_level == 'extra_active' %}selected{% endif %}>Экстремальная активность</option>
+        </select>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+
+    {% else %}
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Пол</div>
+          <div class="fs-5 fw-semibold">{{ user.gender or "Не указан" }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Возраст</div>
+          <div class="fs-5 fw-semibold">{{ user.age }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Рост</div>
+          <div class="fs-5 fw-semibold">{{ user.height_cm }} см</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Вес</div>
+          <div class="fs-5 fw-semibold">{{ user.weight_kg }} кг</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Цель</div>
+          <div class="fs-5 fw-semibold">{{ user.goal }}</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card shadow-sm border-0 p-3 bg-white text-center">
+          <div class="fs-6 text-primary fw-semibold">Уровень активности</div>
+          <div class="fs-5 fw-semibold">
+            {% if user.activity_level == 'sedentary' %}Сидячий
+            {% elif user.activity_level == 'lightly_active' %}Слабая активность
+            {% elif user.activity_level == 'moderately_active' %}Средняя активность
+            {% elif user.activity_level == 'very_active' %}Высокая активность
+            {% elif user.activity_level == 'extra_active' %}Экстремальная активность
+            {% else %}Не указано
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-center">
+        <a href="{{ url_for('user_profile') }}?edit=true" class="btn btn-outline-primary mt-3 px-4">Изменить</a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
