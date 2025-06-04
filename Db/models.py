@@ -35,10 +35,7 @@ class TrainingPlan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
-    level = db.Column(db.String(50))  # новичок, средний, продвинутый
-
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('User', backref='plans')
+    is_global = db.Column(db.Boolean, default=False)
 
 
 class Step(db.Model):

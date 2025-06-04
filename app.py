@@ -2,7 +2,7 @@ from flask import Flask, session, render_template, redirect, request, url_for
 from flask_migrate import Migrate
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_admin.menu import MenuLink
@@ -21,14 +21,14 @@ app = Flask(__name__)
 # Конфигурация
 app.secret_key = 'NGTU'
 
-#user_db = "admin"
-#host_ip = "127.0.0.1"
-#host_port = "5432"
-#database_name = "project_zoj"
-#password = "theWeekend"
+user_db = "admin"
+host_ip = "127.0.0.1"
+host_port = "5432"
+database_name = "project_zoj"
+password = "theWeekend"
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'ru'
 
@@ -82,9 +82,6 @@ class AdminOnlyView(ModelView):
 
     def get_edit_title(self):
         return "Редактирование"
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('loginPage'))
 
 
 class UserAdmin(AdminOnlyView):
@@ -150,21 +147,6 @@ admin.add_link(MenuLink(name='🏠 На главную', url='/app/index/'))
 admin.add_view(UserAdmin(User, db.session, name='Пользователи'))
 admin.add_view(TrainingPlanAdmin(TrainingPlan, db.session, name='Планы тренировок'))
 admin.add_view(ArticleAdmin(Article, db.session, name='Статьи'))
-
-
-# Подсчёт калорий
-def calculate_calories(workout_type: str, duration: int) -> int:
-    calories_per_minute = {
-        'бег': 10,
-        'йога': 4,
-        'силовая': 8,
-        'плавание': 9,
-        'велосипед': 7,
-        'кардио': 9,
-        'ходьба': 3
-    }
-    type_lower = workout_type.strip().lower()
-    return calories_per_minute.get(type_lower, 5) * duration
 
 
 @app.route('/')
@@ -308,7 +290,7 @@ def trainings():
         workouts = Workout.query.filter_by(user_id=user.id).order_by(Workout.date.desc()).all()
 
     # Загрузка планов
-    plans = TrainingPlan.query.filter_by(user_id=user.id).all()
+    plans = TrainingPlan.query.filter_by(is_global=True).all()
 
     # Обработка создания тренировки
     if request.method == 'POST':
@@ -506,8 +488,18 @@ def view_article(article_id):
     return render_template('article_detail.html', article=article)
 
 
+@app.route('/plans')
+@login_required
+def view_plans():
+    user_plans = TrainingPlan.query.filter_by(user_id=current_user.id).all()
+    global_plans = TrainingPlan.query.filter_by(is_global=True).all()
+
+    plans = user_plans + global_plans
+    return render_template('plans.html', plans=plans)
+
+
 # Для хоста
-if os.environ.get("RENDER") == "true":
+'''if os.environ.get("RENDER") == "true":
     with app.app_context():
         db.create_all()
 
@@ -528,4 +520,4 @@ with app.app_context():
         db.session.commit()
         print("Пользователь Wonderwol создан и назначен админом.")
     else:
-        print("Пользователь уже существует.")
+        print("Пользователь уже существует.")'''
