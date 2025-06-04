@@ -514,3 +514,18 @@ if os.environ.get("RENDER") == "true":
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+
+with app.app_context():
+    existing = User.query.filter_by(username="Wonderwol").first()
+    if not existing:
+        user = User(
+            username="Wonderwol",
+            password=generate_password_hash("123"),
+            is_admin=True
+        )
+        db.session.add(user)
+        db.session.commit()
+        print("Пользователь Wonderwol создан и назначен админом.")
+    else:
+        print("Пользователь уже существует.")
