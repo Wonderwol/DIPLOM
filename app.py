@@ -517,10 +517,10 @@ if __name__ == "__main__":
 
 
 with app.app_context():
-    existing = User.query.filter_by(username="Wonderwol").first()
+    existing = User.query.filter_by(username="Admin").first()
     if not existing:
         user = User(
-            username="Wonderwol",
+            username="Admin",
             password=generate_password_hash("123"),
             is_admin=True
         )
