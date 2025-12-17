@@ -17,8 +17,6 @@ from Db.models import User, Workout, TrainingPlan, Step, Article
 
 
 app = Flask(__name__)
-
-# Конфигурация
 app.secret_key = 'NGTU'
 
 user_db = "admin"
@@ -28,7 +26,7 @@ database_name = "project_zoj"
 password = "theWeekend"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'ru'
 
